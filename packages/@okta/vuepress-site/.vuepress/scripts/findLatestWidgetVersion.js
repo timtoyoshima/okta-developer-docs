@@ -12,7 +12,10 @@ const findLatestWidgetVersion = (majorVersion) => {
     throw new Error(`only digits for a major version of the widget permitted! saw: "${majorVersion}"`);
   }
 
-  const publishedVersions = JSON.parse(execSync(`npm view --json @okta/okta-signin-widget@${cleanVersion} version`));
+  const jsonOutput = execSync(`npm view --json @okta/okta-signin-widget@${cleanVersion} version`);
+  console.warn('JSON: ', jsonOutput.toString());
+  const publishedVersions = JSON.parse(jsonOutput);
+  console.warn('Published: ', publishedVersions);
   const latestWidgetVersion = Array.isArray(publishedVersions) ? publishedVersions.sort(semverCompare).slice(-1)[0] : publishedVersions;
 
   return latestWidgetVersion;
