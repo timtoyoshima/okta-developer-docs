@@ -23,26 +23,32 @@ The Projects API has the following operations:
 * [Create a Project](#create-a-project)
 * [Fetch a Project](#fetch-a-project)
 * [Delete a Project](#delete-a-project)
-* [Updates details of a specific Project](#updates-details-of-a-specific-project)
+* [Update a Project](#update-a-project)
+
 * [List Client Configuration Options for a Project](#list-client-configuration-options-for-a-project)
 * [Add Client Configuration Options to a Project](#add-client-configuration-options-to-a-project)
 * [Delete a Client Configuration Option from a Project](#delete-a-client-configuration-option-from-a-project)
+
 * [List Cloud Accounts in a Project](#list-cloud-accounts-in-a-project)
 * [Add a Cloud Account to a Project](#add-a-cloud-account-to-a-project)
 * [Remove a Cloud Account from a Project](#remove-a-cloud-account-from-a-project)
+
 * [List all the ASA Groups in a Project](#list-all-the-asa-groups-in-a-project)
 * [Add an ASA Group to a Project](#add-an-asa-group-to-a-project)
 * [Retrieve ASA Group details for a single Project](#retrieve-asa-group-details-for-a-single-project)
 * [Remove an ASA Group from a Project](#remove-an-asa-group-from-a-project)
 * [Change the Project properties of an ASA Project Group](#change-the-project-properties-of-an-asa-project-group)
+
 * [Fetch a Preauthorization](#fetch-a-preauthorization)
 * [Create a Preauthorization](#create-a-preauthorization)
 * [List the Preauthorizations for a Project](#list-the-preauthorizations-for-a-project)
 * [Update a Preauthorization](#update-a-preauthorization)
+
 * [List Server Enrollment Tokens within a Project](#list-server-enrollment-tokens-within-a-project)
 * [Create a Server Enrollment Token for a Project](#create-a-server-enrollment-token-for-a-project)
 * [Fetch a Server Enrollment Token from a Project](#fetch-a-server-enrollment-token-from-a-project)
 * [Delete a Server Enrollment Token from a Project](#delete-a-server-enrollment-token-from-a-project)
+
 * [List Server Users in a Project](#list-server-users-in-a-project)
 * [Fetch Server User for a Project](#fetch-server-user-for-a-project)
 * [List Servers in a Project](#list-servers-in-a-project)
@@ -97,6 +103,7 @@ This endpoint returns a list of objects with the following fields and a `200` co
 | `require_preauth_for_creds`   | boolean | (Optional) Whether to require preauthorization before an ASA User can retrieve credentials to sign in. Default is `false`. |
 | `shared_admin_user_name`   | string | (Optional) The name for a shared admin user on Servers in this Project. If `force_shared_ssh_users` is `true`, this must be provided. |
 | `shared_standard_user_name`   | string | (Optional) The name for a shared standard user on Servers in this Project. If `force_shared_ssh_users` is `true`, this must be provided. |
+| `ssh_certificate_type`   | string | (Optional) The type of signature algorithm used for authentication keys. Supported values: `CERT_TYPE_ED25519_01` and `CERT_TYPE_RSA_01`. Default is `CERT_TYPE_ED25519_01`. |
 | `ssh_session_recording`   | boolean | (Optional) Whether to enable ssh recording on all Servers in this Project. Default is `false`. |
 | `team`   | string | The ASA Team of the Project |
 
@@ -114,36 +121,36 @@ https://app.scaleft.com/v1/teams/${team_name}/projects
 
 ```json
 {
-	"list": [
-		{
-			"create_server_users": true,
-			"deleted_at": "0001-01-01T00:00:00Z",
-			"force_shared_ssh_users": false,
-			"id": "47534a0d-ba28-4a8b-b427-3a9fb276c033",
-			"name": "the-sound-and-the-fury",
-			"next_unix_gid": 63001,
-			"next_unix_uid": 60001,
-			"require_preauth_for_creds": true,
-			"shared_admin_user_name": null,
-			"shared_standard_user_name": null,
-			"team": "william-faulkner",
-			"user_on_demand_period": null
-		},
-		{
-			"create_server_users": true,
-			"deleted_at": "0001-01-01T00:00:00Z",
-			"force_shared_ssh_users": false,
-			"id": "47534a0d-ba28-4a8b-b427-3a9fb276c033",
-			"name": "the-sound-and-the-fury",
-			"next_unix_gid": 63001,
-			"next_unix_uid": 60001,
-			"require_preauth_for_creds": true,
-			"shared_admin_user_name": null,
-			"shared_standard_user_name": null,
-			"team": "william-faulkner",
-			"user_on_demand_period": null
-		}
-	]
+    "list": [
+        {
+            "create_server_users": true,
+            "deleted_at": "0001-01-01T00:00:00Z",
+            "force_shared_ssh_users": false,
+            "id": "47534a0d-ba28-4a8b-b427-3a9fb276c033",
+            "name": "the-sound-and-the-fury",
+            "next_unix_gid": 63001,
+            "next_unix_uid": 60001,
+            "require_preauth_for_creds": true,
+            "shared_admin_user_name": null,
+            "shared_standard_user_name": null,
+            "team": "william-faulkner",
+            "user_on_demand_period": null
+        },
+        {
+            "create_server_users": true,
+            "deleted_at": "0001-01-01T00:00:00Z",
+            "force_shared_ssh_users": false,
+            "id": "47534a0d-ba28-4a8b-b427-3a9fb276c033",
+            "name": "the-sound-and-the-fury",
+            "next_unix_gid": 63001,
+            "next_unix_uid": 60001,
+            "require_preauth_for_creds": true,
+            "shared_admin_user_name": null,
+            "shared_standard_user_name": null,
+            "team": "william-faulkner",
+            "user_on_demand_period": null
+        }
+    ]
 }
 ```
 ### Create a Project
@@ -201,6 +208,7 @@ This endpoint returns an object with the following fields and a `201` code on a 
 | `require_preauth_for_creds`   | boolean | (Optional) Whether to require preauthorization before an ASA User can retrieve credentials to sign in. Default is `false`. |
 | `shared_admin_user_name`   | string | (Optional) The name for a shared admin user on Servers in this Project. If `force_shared_ssh_users` is `true`, this must be provided. |
 | `shared_standard_user_name`   | string | (Optional) The name for a shared standard user on Servers in this Project. If `force_shared_ssh_users` is `true`, this must be provided. |
+| `ssh_certificate_type`   | string | (Optional) The type of signature algorithm used for authentication keys. Supported values: `CERT_TYPE_ED25519_01` and `CERT_TYPE_RSA_01`. Default is `CERT_TYPE_ED25519_01`. |
 | `ssh_session_recording`   | boolean | (Optional) Whether to enable ssh recording on all Servers in this Project. Default is `false`. |
 | `team`   | string | The ASA Team of the Project |
 
@@ -212,18 +220,18 @@ This endpoint returns an object with the following fields and a `201` code on a 
 curl -v -X POST \
 -H "Authorization: Bearer ${jwt}" \
 --data '{
-	"create_server_users": true,
-	"deleted_at": null,
-	"force_shared_ssh_users": false,
-	"id": "",
-	"name": "the-sound-and-the-fury",
-	"next_unix_gid": null,
-	"next_unix_uid": 0,
-	"require_preauth_for_creds": true,
-	"shared_admin_user_name": null,
-	"shared_standard_user_name": null,
-	"team": "william-faulkner",
-	"user_on_demand_period": null
+    "create_server_users": true,
+    "deleted_at": null,
+    "force_shared_ssh_users": false,
+    "id": "",
+    "name": "the-sound-and-the-fury",
+    "next_unix_gid": null,
+    "next_unix_uid": 0,
+    "require_preauth_for_creds": true,
+    "shared_admin_user_name": null,
+    "shared_standard_user_name": null,
+    "team": "william-faulkner",
+    "user_on_demand_period": null
 }' \
 https://app.scaleft.com/v1/teams/${team_name}/projects
 ```
@@ -232,18 +240,18 @@ https://app.scaleft.com/v1/teams/${team_name}/projects
 
 ```json
 {
-	"create_server_users": true,
-	"deleted_at": "0001-01-01T00:00:00Z",
-	"force_shared_ssh_users": false,
-	"id": "47534a0d-ba28-4a8b-b427-3a9fb276c033",
-	"name": "the-sound-and-the-fury",
-	"next_unix_gid": 63001,
-	"next_unix_uid": 60001,
-	"require_preauth_for_creds": true,
-	"shared_admin_user_name": null,
-	"shared_standard_user_name": null,
-	"team": "william-faulkner",
-	"user_on_demand_period": null
+    "create_server_users": true,
+    "deleted_at": "0001-01-01T00:00:00Z",
+    "force_shared_ssh_users": false,
+    "id": "47534a0d-ba28-4a8b-b427-3a9fb276c033",
+    "name": "the-sound-and-the-fury",
+    "next_unix_gid": 63001,
+    "next_unix_uid": 60001,
+    "require_preauth_for_creds": true,
+    "shared_admin_user_name": null,
+    "shared_standard_user_name": null,
+    "team": "william-faulkner",
+    "user_on_demand_period": null
 }
 ```
 ### Fetch a Project
@@ -284,6 +292,7 @@ This endpoint returns an object with the following fields and a `200` code on a 
 | `require_preauth_for_creds`   | boolean | (Optional) Whether to require preauthorization before an ASA User can retrieve credentials to sign in. Default is `false`. |
 | `shared_admin_user_name`   | string | (Optional) The name for a shared admin user on Servers in this Project. If `force_shared_ssh_users` is `true`, this must be provided. |
 | `shared_standard_user_name`   | string | (Optional) The name for a shared standard user on Servers in this Project. If `force_shared_ssh_users` is `true`, this must be provided. |
+| `ssh_certificate_type`   | string | (Optional) The type of signature algorithm used for authentication keys. Supported values: `CERT_TYPE_ED25519_01` and `CERT_TYPE_RSA_01`. Default is `CERT_TYPE_ED25519_01`. |
 | `ssh_session_recording`   | boolean | (Optional) Whether to enable ssh recording on all Servers in this Project. Default is `false`. |
 | `team`   | string | The ASA Team of the Project |
 
@@ -301,18 +310,18 @@ https://app.scaleft.com/v1/teams/${team_name}/projects/${project_name}
 
 ```json
 {
-	"create_server_users": true,
-	"deleted_at": "0001-01-01T00:00:00Z",
-	"force_shared_ssh_users": false,
-	"id": "47534a0d-ba28-4a8b-b427-3a9fb276c033",
-	"name": "the-sound-and-the-fury",
-	"next_unix_gid": 63001,
-	"next_unix_uid": 60001,
-	"require_preauth_for_creds": true,
-	"shared_admin_user_name": null,
-	"shared_standard_user_name": null,
-	"team": "william-faulkner",
-	"user_on_demand_period": null
+    "create_server_users": true,
+    "deleted_at": "0001-01-01T00:00:00Z",
+    "force_shared_ssh_users": false,
+    "id": "47534a0d-ba28-4a8b-b427-3a9fb276c033",
+    "name": "the-sound-and-the-fury",
+    "next_unix_gid": 63001,
+    "next_unix_uid": 60001,
+    "require_preauth_for_creds": true,
+    "shared_admin_user_name": null,
+    "shared_standard_user_name": null,
+    "team": "william-faulkner",
+    "user_on_demand_period": null
 }
 ```
 ### Delete a Project
@@ -357,9 +366,11 @@ https://app.scaleft.com/v1/teams/${team_name}/projects/${project_name}
 ```json
 HTTP 204 No Content
 ```
-### Updates details of a specific Project
+### Update a Project
 
 <ApiOperation method="PUT" url="https://app.scaleft.com/v1/teams/${team_name}/projects/${project_name}" />
+Updates details of a specific Project.
+
 This endpoint requires the `access_admin` role.
 
 #### Request path parameters
@@ -400,11 +411,11 @@ This endpoint returns a `204 No Content` response on a successful call.
 curl -v -X PUT \
 -H "Authorization: Bearer ${jwt}" \
 --data '{
-	"create_server_users": true,
-	"next_unix_gid": 63011,
-	"next_unix_uid": 60011,
-	"require_preauth_for_creds": false,
-	"user_on_demand_period": null
+    "create_server_users": true,
+    "next_unix_gid": 63011,
+    "next_unix_uid": 60011,
+    "require_preauth_for_creds": false,
+    "user_on_demand_period": null
 }' \
 https://app.scaleft.com/v1/teams/${team_name}/projects/${project_name}
 ```
@@ -459,18 +470,18 @@ https://app.scaleft.com/v1/teams/${team_name}/projects/${project_name}/client_co
 
 ```json
 {
-	"list": [
-		{
-			"config_key": "ssh.insecure_forward_agent",
-			"config_value": "host",
-			"id": "cdcc44bf-db85-4964-9517-91cc69e9086a"
-		},
-		{
-			"config_key": "ssh.port_forward_method",
-			"config_value": "netcat",
-			"id": "9b72bfb7-3191-4098-8c1c-48513399cae9"
-		}
-	]
+    "list": [
+        {
+            "config_key": "ssh.insecure_forward_agent",
+            "config_value": "host",
+            "id": "cdcc44bf-db85-4964-9517-91cc69e9086a"
+        },
+        {
+            "config_key": "ssh.port_forward_method",
+            "config_value": "netcat",
+            "id": "9b72bfb7-3191-4098-8c1c-48513399cae9"
+        }
+    ]
 }
 ```
 ### Add Client Configuration Options to a Project
@@ -517,9 +528,9 @@ This endpoint returns an object with the following fields and a `200` code on a 
 curl -v -X POST \
 -H "Authorization: Bearer ${jwt}" \
 --data '{
-	"config_key": "ssh.insecure_forward_agent",
-	"config_value": "host",
-	"id": ""
+    "config_key": "ssh.insecure_forward_agent",
+    "config_value": "host",
+    "id": ""
 }' \
 https://app.scaleft.com/v1/teams/${team_name}/projects/${project_name}/client_config_options
 ```
@@ -528,9 +539,9 @@ https://app.scaleft.com/v1/teams/${team_name}/projects/${project_name}/client_co
 
 ```json
 {
-	"config_key": "ssh.insecure_forward_agent",
-	"config_value": "host",
-	"id": "cdcc44bf-db85-4964-9517-91cc69e9086a"
+    "config_key": "ssh.insecure_forward_agent",
+    "config_value": "host",
+    "id": "cdcc44bf-db85-4964-9517-91cc69e9086a"
 }
 ```
 ### Delete a Client Configuration Option from a Project
@@ -603,10 +614,17 @@ This endpoint has no request body.
 This endpoint returns a list of objects with the following fields and a `200` code on a successful call.
 | Properties | Type        | Description          |
 |----------|-------------|----------------------|
+| `account_details`   | string | Provider-specific account details |
 | `account_id`   | string | The provider-specific account ID |
-| `description`   | string | (optional) Human-readable description of the Cloud Account |
-| `id`   | string | UUID of the Cloud Account |
+| `client_id`   | string | The Client ID used to authorize the EventBridge connection |
+| `client_secret`   | string | The Client Secret used to authorize the EventBridge connection |
+| `deleted_at`   | string | Time of deletion. `null` if not deleted. |
+| `description`   | string | (Optional) Human-readable description of the Cloud Account |
+| `id`   | string | The UUID of the Cloud Account |
+| `project_name`   | string | The name of associated Project |
 | `provider`   | string | A Cloud provider: `aws` or `gce` |
+| `secret_last_rotated`   | string | Time of last secret rotation. `null` if unrotated. |
+| `updated_at`   | string | Time of the previous update |
 
 #### Usage example
 
@@ -622,20 +640,20 @@ https://app.scaleft.com/v1/teams/${team_name}/projects/${project_name}/cloud_acc
 
 ```json
 {
-	"list": [
-		{
-			"account_id": "123456789012",
-			"description": "Dev AWS account",
-			"id": "23a38ea4-fc9a-4805-8df7-59e63a7845fb",
-			"provider": "aws"
-		},
-		{
-			"account_id": "630225935076",
-			"description": "Dev GCE account",
-			"id": "1bb650df-6ac7-44aa-87db-c37fce8d5f43",
-			"provider": "gce"
-		}
-	]
+    "list": [
+        {
+            "account_id": "123456789012",
+            "description": "Dev AWS account",
+            "id": "23a38ea4-fc9a-4805-8df7-59e63a7845fb",
+            "provider": "aws"
+        },
+        {
+            "account_id": "630225935076",
+            "description": "Dev GCE account",
+            "id": "1bb650df-6ac7-44aa-87db-c37fce8d5f43",
+            "provider": "gce"
+        }
+    ]
 }
 ```
 ### Add a Cloud Account to a Project
@@ -665,10 +683,17 @@ This endpoint has no request body.
 This endpoint returns an object with the following fields and a `200` code on a successful call.
 | Properties | Type        | Description          |
 |----------|-------------|----------------------|
+| `account_details`   | string | Provider-specific account details |
 | `account_id`   | string | The provider-specific account ID |
-| `description`   | string | (optional) Human-readable description of the Cloud Account |
-| `id`   | string | UUID of the Cloud Account |
+| `client_id`   | string | The Client ID used to authorize the EventBridge connection |
+| `client_secret`   | string | The Client Secret used to authorize the EventBridge connection |
+| `deleted_at`   | string | Time of deletion. `null` if not deleted. |
+| `description`   | string | (Optional) Human-readable description of the Cloud Account |
+| `id`   | string | The UUID of the Cloud Account |
+| `project_name`   | string | The name of associated Project |
 | `provider`   | string | A Cloud provider: `aws` or `gce` |
+| `secret_last_rotated`   | string | Time of last secret rotation. `null` if unrotated. |
+| `updated_at`   | string | Time of the previous update |
 
 #### Usage example
 
@@ -684,10 +709,10 @@ https://app.scaleft.com/v1/teams/${team_name}/projects/${project_name}/cloud_acc
 
 ```json
 {
-	"account_id": "123456789012",
-	"description": "Dev AWS account",
-	"id": "23a38ea4-fc9a-4805-8df7-59e63a7845fb",
-	"provider": "aws"
+    "account_id": "123456789012",
+    "description": "Dev AWS account",
+    "id": "23a38ea4-fc9a-4805-8df7-59e63a7845fb",
+    "provider": "aws"
 }
 ```
 ### Remove a Cloud Account from a Project
@@ -787,27 +812,27 @@ https://app.scaleft.com/v1/teams/${team_name}/projects/${project_name}/groups
 
 ```json
 {
-	"list": [
-		{
-			"create_server_group": true,
-			"deleted_at": null,
-			"group": "compsons",
-			"group_id": "3447e842-8755-4cd6-9da1-80fc929b3e04",
-			"id": "",
-			"name": "compsons",
-			"profile_attributes": {
-				"unix_gid": 63000,
-				"unix_group_name": "sft_compsons",
-				"windows_group_name": "sft_compsons"
-			},
-			"project": "the-sound-and-the-fury",
-			"removed_at": null,
-			"server_access": false,
-			"server_admin": true,
-			"server_group_name": null,
-			"unix_gid": null
-		}
-	]
+    "list": [
+        {
+            "create_server_group": true,
+            "deleted_at": null,
+            "group": "compsons",
+            "group_id": "3447e842-8755-4cd6-9da1-80fc929b3e04",
+            "id": "",
+            "name": "compsons",
+            "profile_attributes": {
+                "unix_gid": 63000,
+                "unix_group_name": "sft_compsons",
+                "windows_group_name": "sft_compsons"
+            },
+            "project": "the-sound-and-the-fury",
+            "removed_at": null,
+            "server_access": false,
+            "server_admin": true,
+            "server_group_name": null,
+            "unix_gid": null
+        }
+    ]
 }
 ```
 ### Add an ASA Group to a Project
@@ -859,17 +884,17 @@ This endpoint returns a `204 No Content` response on a successful call.
 curl -v -X POST \
 -H "Authorization: Bearer ${jwt}" \
 --data '{
-	"create_server_group": true,
-	"deleted_at": null,
-	"group": "compsons",
-	"group_id": "",
-	"id": "",
-	"name": "compsons",
-	"removed_at": null,
-	"server_access": true,
-	"server_admin": false,
-	"server_group_name": null,
-	"unix_gid": null
+    "create_server_group": true,
+    "deleted_at": null,
+    "group": "compsons",
+    "group_id": "",
+    "id": "",
+    "name": "compsons",
+    "removed_at": null,
+    "server_access": true,
+    "server_admin": false,
+    "server_group_name": null,
+    "unix_gid": null
 }' \
 https://app.scaleft.com/v1/teams/${team_name}/projects/${project_name}/groups
 ```
@@ -936,23 +961,23 @@ https://app.scaleft.com/v1/teams/${team_name}/projects/${project_name}/groups/${
 
 ```json
 {
-	"create_server_group": true,
-	"deleted_at": null,
-	"group": "compsons",
-	"group_id": "3447e842-8755-4cd6-9da1-80fc929b3e04",
-	"id": "",
-	"name": "compsons",
-	"profile_attributes": {
-		"unix_gid": 63000,
-		"unix_group_name": "sft_compsons",
-		"windows_group_name": "sft_compsons"
-	},
-	"project": "the-sound-and-the-fury",
-	"removed_at": null,
-	"server_access": false,
-	"server_admin": true,
-	"server_group_name": null,
-	"unix_gid": null
+    "create_server_group": true,
+    "deleted_at": null,
+    "group": "compsons",
+    "group_id": "3447e842-8755-4cd6-9da1-80fc929b3e04",
+    "id": "",
+    "name": "compsons",
+    "profile_attributes": {
+        "unix_gid": 63000,
+        "unix_group_name": "sft_compsons",
+        "windows_group_name": "sft_compsons"
+    },
+    "project": "the-sound-and-the-fury",
+    "removed_at": null,
+    "server_access": false,
+    "server_admin": true,
+    "server_group_name": null,
+    "unix_gid": null
 }
 ```
 ### Remove an ASA Group from a Project
@@ -1048,17 +1073,17 @@ This endpoint returns a `204 No Content` response on a successful call.
 curl -v -X PUT \
 -H "Authorization: Bearer ${jwt}" \
 --data '{
-	"create_server_group": true,
-	"deleted_at": null,
-	"group": "compsons",
-	"group_id": "",
-	"id": "",
-	"name": "compsons",
-	"removed_at": null,
-	"server_access": false,
-	"server_admin": true,
-	"server_group_name": null,
-	"unix_gid": null
+    "create_server_group": true,
+    "deleted_at": null,
+    "group": "compsons",
+    "group_id": "",
+    "id": "",
+    "name": "compsons",
+    "removed_at": null,
+    "server_access": false,
+    "server_admin": true,
+    "server_group_name": null,
+    "unix_gid": null
 }' \
 https://app.scaleft.com/v1/teams/${team_name}/projects/${project_name}/groups/${group_name}
 ```
@@ -1116,14 +1141,14 @@ https://app.scaleft.com/v1/teams/${team_name}/projects/${project_name}/preauthor
 
 ```json
 {
-	"disabled": false,
-	"expires_at": "2020-07-28T18:30:00Z",
-	"id": "566b0fa9-f3ef-4825-a390-16d1766764a0",
-	"projects": [
-		"the-sound-and-the-fury"
-	],
-	"servers": null,
-	"user_name": "jason.compson"
+    "disabled": false,
+    "expires_at": "2020-07-28T18:30:00Z",
+    "id": "566b0fa9-f3ef-4825-a390-16d1766764a0",
+    "projects": [
+        "the-sound-and-the-fury"
+    ],
+    "servers": null,
+    "user_name": "jason.compson"
 }
 ```
 ### Create a Preauthorization
@@ -1168,13 +1193,13 @@ This endpoint returns a `204 No Content` response on a successful call.
 curl -v -X POST \
 -H "Authorization: Bearer ${jwt}" \
 --data '{
-	"disabled": false,
-	"expires_at": "2020-07-28T18:30:00Z",
-	"id": "",
-	"projects": [
-		"the-sound-and-the-fury"
-	],
-	"user_name": "jason.compson"
+    "disabled": false,
+    "expires_at": "2020-07-28T18:30:00Z",
+    "id": "",
+    "projects": [
+        "the-sound-and-the-fury"
+    ],
+    "user_name": "jason.compson"
 }' \
 https://app.scaleft.com/v1/teams/${team_name}/projects/${project_name}/preauthorizations
 ```
@@ -1209,7 +1234,7 @@ This endpoint requires one of the following roles: `access_admin`, or `preauthor
 | `include_expired`   |  boolean | (Optional) If `true`, includes expired preauthorizations |
 | `offset`   |  string | (Optional) The identifier used as an offset for pagination. This value is embedded in the URL of the Link header and is only used for requests that require [pagination](/docs/reference/api/asa/introduction/#pagination) support. |
 | `prev`   |  boolean | (Optional) The direction of paging |
-| `project`   |  string | (Optional) If a value is provided, filters for the specified Project. This doesn`t apply if used against a Project-specific endpoint. |
+| `project`   |  string | (Optional) If a value is provided, filters for the specified Project. This doesn't apply if used against a Project-specific endpoint. |
 
 
 #### Request body
@@ -1241,18 +1266,18 @@ https://app.scaleft.com/v1/teams/${team_name}/projects/${project_name}/preauthor
 
 ```json
 {
-	"list": [
-		{
-			"disabled": false,
-			"expires_at": "2020-07-28T18:30:00Z",
-			"id": "566b0fa9-f3ef-4825-a390-16d1766764a0",
-			"projects": [
-				"the-sound-and-the-fury"
-			],
-			"servers": null,
-			"user_name": "jason.compson"
-		}
-	]
+    "list": [
+        {
+            "disabled": false,
+            "expires_at": "2020-07-28T18:30:00Z",
+            "id": "566b0fa9-f3ef-4825-a390-16d1766764a0",
+            "projects": [
+                "the-sound-and-the-fury"
+            ],
+            "servers": null,
+            "user_name": "jason.compson"
+        }
+    ]
 }
 ```
 ### Update a Preauthorization
@@ -1303,13 +1328,13 @@ This endpoint returns an object with the following fields and a `200` code on a 
 curl -v -X PUT \
 -H "Authorization: Bearer ${jwt}" \
 --data '{
-	"disabled": true,
-	"expires_at": "2020-07-28T18:30:00Z",
-	"id": "",
-	"projects": [
-		"the-sound-and-the-fury"
-	],
-	"user_name": "jason.compson"
+    "disabled": true,
+    "expires_at": "2020-07-28T18:30:00Z",
+    "id": "",
+    "projects": [
+        "the-sound-and-the-fury"
+    ],
+    "user_name": "jason.compson"
 }' \
 https://app.scaleft.com/v1/teams/${team_name}/projects/${project_name}/preauthorizations/${authorization_id}
 ```
@@ -1318,14 +1343,14 @@ https://app.scaleft.com/v1/teams/${team_name}/projects/${project_name}/preauthor
 
 ```json
 {
-	"disabled": true,
-	"expires_at": "2020-07-28T18:30:00Z",
-	"id": "566b0fa9-f3ef-4825-a390-16d1766764a0",
-	"projects": [
-		"the-sound-and-the-fury"
-	],
-	"servers": null,
-	"user_name": "jason.compson"
+    "disabled": true,
+    "expires_at": "2020-07-28T18:30:00Z",
+    "id": "566b0fa9-f3ef-4825-a390-16d1766764a0",
+    "projects": [
+        "the-sound-and-the-fury"
+    ],
+    "servers": null,
+    "user_name": "jason.compson"
 }
 ```
 ### List Server Enrollment Tokens within a Project
@@ -1610,30 +1635,30 @@ https://app.scaleft.com/v1/teams/${team_name}/projects/${project_name}/server_us
 
 ```json
 {
-	"list": [
-		{
-			"admin": true,
-			"id": "2bbed0a1-7f9a-4627-addd-4a9cfa0e0469",
-			"server_user_name": "benjy",
-			"status": "ACTIVE",
-			"type": "human",
-			"unix_gid": 63001,
-			"unix_uid": 60001,
-			"user_name": "benjycompson",
-			"windows_server_user_name": "benjy"
-		},
-		{
-			"admin": false,
-			"id": "b38e7db4-506f-4bc4-884a-57461c3fc0ae",
-			"server_user_name": "quentin",
-			"status": "DELETED",
-			"type": "human",
-			"unix_gid": 63002,
-			"unix_uid": 60002,
-			"user_name": "quentincompson",
-			"windows_server_user_name": "quentin"
-		}
-	]
+    "list": [
+        {
+            "admin": true,
+            "id": "2bbed0a1-7f9a-4627-addd-4a9cfa0e0469",
+            "server_user_name": "benjy",
+            "status": "ACTIVE",
+            "type": "human",
+            "unix_gid": 63001,
+            "unix_uid": 60001,
+            "user_name": "benjycompson",
+            "windows_server_user_name": "benjy"
+        },
+        {
+            "admin": false,
+            "id": "b38e7db4-506f-4bc4-884a-57461c3fc0ae",
+            "server_user_name": "quentin",
+            "status": "DELETED",
+            "type": "human",
+            "unix_gid": 63002,
+            "unix_uid": 60002,
+            "user_name": "quentincompson",
+            "windows_server_user_name": "quentin"
+        }
+    ]
 }
 ```
 ### Fetch Server User for a Project
@@ -1688,17 +1713,17 @@ https://app.scaleft.com/v1/teams/${team_name}/projects/${project_name}/server_us
 
 ```json
 {
-	"list": {
-		"admin": true,
-		"id": "2bbed0a1-7f9a-4627-addd-4a9cfa0e0469",
-		"server_user_name": "benjy",
-		"status": "ACTIVE",
-		"type": "human",
-		"unix_gid": 63001,
-		"unix_uid": 60001,
-		"user_name": "benjycompson",
-		"windows_server_user_name": "benjy"
-	}
+    "list": {
+        "admin": true,
+        "id": "2bbed0a1-7f9a-4627-addd-4a9cfa0e0469",
+        "server_user_name": "benjy",
+        "status": "ACTIVE",
+        "type": "human",
+        "unix_gid": 63001,
+        "unix_uid": 60001,
+        "user_name": "benjycompson",
+        "windows_server_user_name": "benjy"
+    }
 }
 ```
 ### List Servers in a Project
@@ -1733,6 +1758,7 @@ This endpoint returns a list of objects with the following fields and a `200` co
 | `bastion`   | string | Specifies the bastion host that Clients automatically use when connecting to this host |
 | `canonical_name`   | string | Specifies the name that Clients should use/see when connecting to this host. Overrides the name found with hostname. |
 | `cloud_provider`   | string | The cloud provider of the Server, if one exists |
+| `default_address`   | string | The default IP address of the Server |
 | `deleted_at`   | string | The time the Server was deleted from the Project |
 | `hostname`   | string | The hostname of the Server |
 | `id`   | string | The UUID corresponding to the Server |
@@ -1764,56 +1790,56 @@ https://app.scaleft.com/v1/teams/${team_name}/projects/${project_name}/servers
 
 ```json
 {
-	"list": [
-		{
-			"access_address": null,
-			"alt_names": null,
-			"bastion": null,
-			"canonical_name": null,
-			"cloud_provider": null,
-			"deleted_at": "0001-01-01T00:00:00Z",
-			"hostname": "harvard",
-			"id": "0a49a1cf-c747-47a0-bb14-94b1edb9f3ee",
-			"instance_details": null,
-			"last_seen": "0001-01-01T00:00:00Z",
-			"managed": true,
-			"os": "Ubuntu 16.04",
-			"os_type": "linux",
-			"project_name": "the-sound-and-the-fury",
-			"registered_at": "0001-01-01T00:00:00Z",
-			"services": [
-				"ssh"
-			],
-			"sftd_version": "1.44.4",
-			"ssh_host_keys": null,
-			"state": "INACTIVE",
-			"team_name": "william-faulkner"
-		},
-		{
-			"access_address": null,
-			"alt_names": null,
-			"bastion": null,
-			"canonical_name": null,
-			"cloud_provider": null,
-			"deleted_at": "0001-01-01T00:00:00Z",
-			"hostname": "jefferson",
-			"id": "ac68cb70-e3eb-4239-b6de-73d3878dd97b",
-			"instance_details": null,
-			"last_seen": "0001-01-01T00:00:00Z",
-			"managed": true,
-			"os": "Ubuntu 16.04",
-			"os_type": "linux",
-			"project_name": "the-sound-and-the-fury",
-			"registered_at": "0001-01-01T00:00:00Z",
-			"services": [
-				"ssh"
-			],
-			"sftd_version": "1.44.4",
-			"ssh_host_keys": null,
-			"state": "INACTIVE",
-			"team_name": "william-faulkner"
-		}
-	]
+    "list": [
+        {
+            "access_address": null,
+            "alt_names": null,
+            "bastion": null,
+            "canonical_name": null,
+            "cloud_provider": null,
+            "deleted_at": "0001-01-01T00:00:00Z",
+            "hostname": "harvard",
+            "id": "0a49a1cf-c747-47a0-bb14-94b1edb9f3ee",
+            "instance_details": null,
+            "last_seen": "0001-01-01T00:00:00Z",
+            "managed": true,
+            "os": "Ubuntu 16.04",
+            "os_type": "linux",
+            "project_name": "the-sound-and-the-fury",
+            "registered_at": "0001-01-01T00:00:00Z",
+            "services": [
+                "ssh"
+            ],
+            "sftd_version": "1.44.4",
+            "ssh_host_keys": null,
+            "state": "INACTIVE",
+            "team_name": "william-faulkner"
+        },
+        {
+            "access_address": null,
+            "alt_names": null,
+            "bastion": null,
+            "canonical_name": null,
+            "cloud_provider": null,
+            "deleted_at": "0001-01-01T00:00:00Z",
+            "hostname": "jefferson",
+            "id": "ac68cb70-e3eb-4239-b6de-73d3878dd97b",
+            "instance_details": null,
+            "last_seen": "0001-01-01T00:00:00Z",
+            "managed": true,
+            "os": "Ubuntu 16.04",
+            "os_type": "linux",
+            "project_name": "the-sound-and-the-fury",
+            "registered_at": "0001-01-01T00:00:00Z",
+            "services": [
+                "ssh"
+            ],
+            "sftd_version": "1.44.4",
+            "ssh_host_keys": null,
+            "state": "INACTIVE",
+            "team_name": "william-faulkner"
+        }
+    ]
 }
 ```
 ### Add an Unmanaged Server to a Project
@@ -1853,6 +1879,7 @@ This endpoint returns an object with the following fields and a `200` code on a 
 | `bastion`   | string | Specifies the bastion host that Clients automatically use when connecting to this host |
 | `canonical_name`   | string | Specifies the name that Clients should use/see when connecting to this host. Overrides the name found with hostname. |
 | `cloud_provider`   | string | The cloud provider of the Server, if one exists |
+| `default_address`   | string | The default IP address of the Server |
 | `deleted_at`   | string | The time the Server was deleted from the Project |
 | `hostname`   | string | The hostname of the Server |
 | `id`   | string | The UUID corresponding to the Server |
@@ -1878,11 +1905,11 @@ This endpoint returns an object with the following fields and a `200` code on a 
 curl -v -X POST \
 -H "Authorization: Bearer ${jwt}" \
 --data '{
-	"access_address": "1.2.3.4",
-	"alt_names": [
-		"bastion"
-	],
-	"hostname": "bastion.dev.com"
+    "access_address": "1.2.3.4",
+    "alt_names": [
+        "bastion"
+    ],
+    "hostname": "bastion.dev.com"
 }' \
 https://app.scaleft.com/v1/teams/${team_name}/projects/${project_name}/servers
 ```
@@ -1891,26 +1918,26 @@ https://app.scaleft.com/v1/teams/${team_name}/projects/${project_name}/servers
 
 ```json
 {
-	"access_address": null,
-	"alt_names": null,
-	"bastion": null,
-	"canonical_name": null,
-	"cloud_provider": null,
-	"deleted_at": "0001-01-01T00:00:00Z",
-	"hostname": "bastion.dev.com",
-	"id": "190cfa4d-9075-40b0-b50f-33fa7a940ac4",
-	"instance_details": null,
-	"last_seen": "0001-01-01T00:00:00Z",
-	"managed": false,
-	"os": "",
-	"os_type": null,
-	"project_name": "the-sound-and-the-fury",
-	"registered_at": "0001-01-01T00:00:00Z",
-	"services": [],
-	"sftd_version": null,
-	"ssh_host_keys": null,
-	"state": "ACTIVE",
-	"team_name": "william-faulkner"
+    "access_address": null,
+    "alt_names": null,
+    "bastion": null,
+    "canonical_name": null,
+    "cloud_provider": null,
+    "deleted_at": "0001-01-01T00:00:00Z",
+    "hostname": "bastion.dev.com",
+    "id": "190cfa4d-9075-40b0-b50f-33fa7a940ac4",
+    "instance_details": null,
+    "last_seen": "0001-01-01T00:00:00Z",
+    "managed": false,
+    "os": "",
+    "os_type": null,
+    "project_name": "the-sound-and-the-fury",
+    "registered_at": "0001-01-01T00:00:00Z",
+    "services": [],
+    "sftd_version": null,
+    "ssh_host_keys": null,
+    "state": "ACTIVE",
+    "team_name": "william-faulkner"
 }
 ```
 
@@ -1947,6 +1974,7 @@ This endpoint returns an object with the following fields and a `200` code on a 
 | `bastion`   | string | Specifies the bastion host that Clients automatically use when connecting to this host |
 | `canonical_name`   | string | Specifies the name that Clients should use/see when connecting to this host. Overrides the name found with hostname. |
 | `cloud_provider`   | string | The cloud provider of the Server, if one exists |
+| `default_address`   | string | The default IP address of the Server |
 | `deleted_at`   | string | The time the Server was deleted from the Project |
 | `hostname`   | string | The hostname of the Server |
 | `id`   | string | The UUID corresponding to the Server |
@@ -1978,28 +2006,28 @@ https://app.scaleft.com/v1/teams/${team_name}/projects/${project_name}/servers/$
 
 ```json
 {
-	"access_address": null,
-	"alt_names": null,
-	"bastion": null,
-	"canonical_name": null,
-	"cloud_provider": null,
-	"deleted_at": "0001-01-01T00:00:00Z",
-	"hostname": "harvard",
-	"id": "0a49a1cf-c747-47a0-bb14-94b1edb9f3ee",
-	"instance_details": null,
-	"last_seen": "0001-01-01T00:00:00Z",
-	"managed": true,
-	"os": "Ubuntu 16.04",
-	"os_type": "linux",
-	"project_name": "the-sound-and-the-fury",
-	"registered_at": "0001-01-01T00:00:00Z",
-	"services": [
-		"ssh"
-	],
-	"sftd_version": "1.44.4",
-	"ssh_host_keys": null,
-	"state": "INACTIVE",
-	"team_name": "william-faulkner"
+    "access_address": null,
+    "alt_names": null,
+    "bastion": null,
+    "canonical_name": null,
+    "cloud_provider": null,
+    "deleted_at": "0001-01-01T00:00:00Z",
+    "hostname": "harvard",
+    "id": "0a49a1cf-c747-47a0-bb14-94b1edb9f3ee",
+    "instance_details": null,
+    "last_seen": "0001-01-01T00:00:00Z",
+    "managed": true,
+    "os": "Ubuntu 16.04",
+    "os_type": "linux",
+    "project_name": "the-sound-and-the-fury",
+    "registered_at": "0001-01-01T00:00:00Z",
+    "services": [
+        "ssh"
+    ],
+    "sftd_version": "1.44.4",
+    "ssh_host_keys": null,
+    "state": "INACTIVE",
+    "team_name": "william-faulkner"
 }
 ```
 ### Remove a Server from a Project
@@ -2085,9 +2113,9 @@ This endpoint returns a `204 No Content` response on a successful call.
 curl -v -X PUT \
 -H "Authorization: Bearer ${jwt}" \
 --data '{
-	"labels": {
-		"foo": "bar"
-	}
+    "labels": {
+        "foo": "bar"
+    }
 }' \
 https://app.scaleft.com/v1/teams/${team_name}/projects/${project_name}/servers/${server_id}
 ```
