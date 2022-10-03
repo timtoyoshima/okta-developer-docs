@@ -339,6 +339,10 @@ export const guides = [
             title: "Configure a global session policy and authentication policies",
             guideName: "configure-signon-policy"
           },
+          { title: "Configure a Global Session Policy and authentication policies",
+            guideName: "configure-signon-policy" },
+          { title: "Configure profile enrollment policies",
+            guideName: "configure-profile-enrollment-policies" },
           {
             title: "Add an external Identity Provider",
             path: "/docs/guides/identity-providers/",
@@ -726,6 +730,10 @@ export const guides = [
           {
             title: "Add multifactor authentication",
             guideName: "mfa",
+          },
+          {
+            title: "Set up self-service registration",
+            guideName: "archive-set-up-self-service-registration"
           },
           {
             title: "Registration Inline Hook",
