@@ -1579,7 +1579,7 @@ For brevity, the following response doesn't include all available properties.
             { "title": "US West (Oregon)", "const": "us-west-2" },
             { "title": "Africa (Cape Town)", "const": "af-south-1" },
             { "title": "Asia Pacific (Hong Kong)", "const": "ap-east-1" },
-            { "title": "Asia Pacific (Jakarta) ", "const": "ap-southeast-3" },
+            { "title": "Asia Pacific (Jakarta)", "const": "ap-southeast-3" },
             { "title": "Asia Pacific (Mumbai)", "const": "ap-south-1" },
             { "title": "Asia Pacific (Osaka)", "const": "ap-northeast-3" },
             { "title": "Asia Pacific (Seoul)", "const": "ap-northeast-2" },
