@@ -773,6 +773,7 @@ Fetch a user by `id`, `login`, or `login shortname` if the short name is unambig
 | Parameter | Description                                                        | Param Type | DataType | Required |
 | --------- | ------------------------------------------------------------------ | ---------- | -------- | -------- |
 | id        | `id`, `login`, or `login shortname` (as long as it is unambiguous) | URL        | String   | TRUE     |
+| expand        | Valid value: `block`. If you have migrated to Okta Identity Engine, you can specify `blocks` to include account block details in the `_embedded` attribute. The embedded object will be the same as the one returned by the [Get User's Blocks](#get-user-s-blocks) operation | Query        | String   | FALSE     |
 
 > When fetching a user by `login` or `login shortname`, you should [URL encode](http://en.wikipedia.org/wiki/Percent-encoding) the request parameter to ensure special characters are escaped properly.  Logins with a `/` or `?`  character can only be fetched by `id` due to URL issues with escaping the `/` and `?` characters.
 
@@ -2135,6 +2136,47 @@ curl -v -X GET \
 ]
 ```
 
+### Get User's Blocks
+
+<ApiOperation method="get" url="/api/v1/users/${userId}/blocks" />
+
+Lists information about how the account is blocked from access
+
+##### Request parameters
+
+
+| Parameter | Description  | Param Type | DataType | Required |
+| --------- | ------------ | ---------- | -------- | -------- |
+| id        | `id`, `login`, or `login shortname` (as long as it is unambiguous) of user | URL        | String   | TRUE     |
+
+##### Response parameters
+
+
+Array of [User Blocks](/docs/reference/api/users/#user-block-object)
+
+##### Request example
+
+
+```bash
+curl -v -X GET \
+-H "Accept: application/json" \
+-H "Content-Type: application/json" \
+-H "Authorization: SSWS ${api_token}" \
+"https://${yourOktaDomain}/api/v1/users/00ub0oNGTSWTBKOLGLNR/blocks"
+```
+
+##### Response example
+
+
+```json
+[
+  {
+    "type": "DEVICE_BASED",
+    "appliesTo": "UNKNOWN_DEVICES"
+  }
+]
+```
+
 ### Get User's Groups
 
 
@@ -2191,7 +2233,6 @@ curl -v -X GET \
 
 Lifecycle operations are non-idempotent operations that initiate a state transition for a user's status.
 Some operations are asynchronous while others are synchronous. The user's current status limits what operations are allowed.
-For example, you can't unlock a user that is `ACTIVE`.
 
 ### Activate User
 
@@ -2570,7 +2611,7 @@ HTTP/1.1 204 No Content
 
 <ApiOperation method="post" url="/api/v1/users/${userId}/lifecycle/unlock" />
 
-Unlocks a user with a `LOCKED_OUT` status and returns them to `ACTIVE` status.  Users will be able to login with their current password.
+Unlocks a user with a `LOCKED_OUT` status or unlocks a user with an `ACTIVE` status that is [blocked from unknown devices](/docs/reference/api/attack-protection/#user-lockout-settings-object). Unlocked users have an `ACTIVE` status and can sign in with their current password.
 
 > **Note:** This operation works with Okta-sourced users. It doesn't support directory-sourced accounts such as Active Directory.
 
@@ -4312,6 +4353,16 @@ Here are some links that may be available on a User, as determined by your polic
     }
 }
 ```
+
+#### User Block object
+
+The object describes how the account is blocked from access. If `appliesTo` is `ANY_DEVICES`, the account is blocked for all devices. If `appliesTo` is `UNKNOWN_DEVICES`, the account is only [blocked for unknown devices](/docs/reference/api/attack-protection/#user-lockout-settings-object).
+
+| Property  | Description | Datatype |
+| :---------| :---------- | :------- |
+| type      | Type of the block. Valid values: `DEVICE_BASED` | String |
+| appliesTo | Target of the block. Valid values: `ANY_DEVICES`, `UNKNOWN_DEVICES` | String |
+
 
 #### User-Consent Grant properties
 

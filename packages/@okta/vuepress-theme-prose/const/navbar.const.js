@@ -905,6 +905,7 @@ export const reference = [
           { title: "Manage Okta Objects", path: "empty"},
           { title: "Administrator Roles", path: "/docs/reference/api/roles/" },
           { title: "Apps", path: "/docs/reference/api/apps/" },
+          { title: "Attack Protection", path: "/docs/reference/api/attack-protection/" },
           { title: "Authenticators Admin", path: "/docs/reference/api/authenticators-admin/" },
           { title: "Authorization Servers", path: "/docs/reference/api/authorization-servers/"},
           { title: "Brands", path: "/docs/reference/api/brands/"},
