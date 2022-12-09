@@ -17,7 +17,7 @@ Source image: https://www.figma.com/file/YH5Zhzp66kGCglrXQUag2E/%F0%9F%93%8A-Upd
 
 When the user initiates the sign-in process, your app needs to:
 
-* Create a new `OktaAuth` object, which is `authClient` in the SDK sample app's `login.js` file
+* Create a new `OktaAuth` object, which is `authClient` in the SDK sample application's `login.js` file
 * Set its `username` and `password` properties to the values entered by the user
 * Send this object to [`idx.authenticate()`](https://github.com/okta/okta-auth-js/blob/master/docs/idx.md#idxauthenticate) to authenticate the user
 
@@ -35,7 +35,7 @@ router.post('/login', async (req, res, next) => {
 
 ### 3: Handle the response from the user sign-in flow
 
-The application handles the response from the authentication call through the `handleTransaction()` function, as shown in the SDK sample application's `handleTransaction.js` file. The `transaction` parameter is the `IdxStatus` value that is passed in through the response from Okta.
+The application handles the response from the authentication call through the `handleTransaction()` function, as shown in the SDK sample application's `handleTransaction.js` file. The `transaction` parameter contains the `IdxStatus` value that is passed in through the response from Okta.
 
 ```JavaScript
 module.exports = function handleTransaction({
@@ -57,7 +57,7 @@ module.exports = function handleTransaction({
 
 #### Success status
 
-For a successful sign-in response, the `IdxStatus` field indicates a success `IdxStatus.SUCCESS`, retrieves the token from the response, and processes the authenticated user in the app. The SDK sample application
+For a successful sign-in response, the `IdxStatus` field has a `IdxStatus.SUCCESS` value. The switch statement handles the success case by retrieving the token from the response and processing the authenticated user. The SDK sample application
 saves the tokens to storage in the `handleTransaction.js` file and redirects the user back to the home page.
 
 ```JavaScript
@@ -74,7 +74,7 @@ case IdxStatus.SUCCESS:
 
 #### Other authentication statuses
 
-You need to handle other returned `IdxStatus` cases if the user didn't sign in successfully. For example, in the SDK application's `handleTransactions.js` file:
+You need to handle other returned `IdxStatus` cases if the user didn't sign in successfully. For example, in the SDK sample application's `handleTransactions.js` file, the switch statement handles the cases for the other statuses:
 
 ```JavaScript
  switch (status) {
@@ -112,4 +112,4 @@ You need to handle other returned `IdxStatus` cases if the user didn't sign in s
 
 ### 4 (Optional): Get the user profile information
 
-Optionally, you can obtain basic user information after the user is authenticated by making a request to Okta's Open ID Connect authorization server (see the next section).
+Optionally, you can obtain basic user information after the user is authenticated by making a request to Okta's Open ID Connect authorization server.
